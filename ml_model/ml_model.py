@@ -20,14 +20,14 @@ def train_model():
 
     cv = CountVectorizer()
     count_matrix = cv.fit_transform(dataset['combined_features'])
-    model = cosine_similarity(count_matrix)
+    ml_model = cosine_similarity(count_matrix)
 
-    np.save('model/model.npy', model)
+    np.save('ml_model/ml_model.npy', ml_model)
 
-    return model
+    return ml_model
 
 def get_model():
-    if path.exists('model/model.npy'):
-        return np.load('model/model.npy')
+    if path.exists('ml_model/ml_model.npy'):
+        return np.load('ml_model/ml_model.npy')
     else:
         return train_model()

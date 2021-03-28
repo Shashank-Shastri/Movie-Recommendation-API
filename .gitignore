@@ -8,7 +8,7 @@ MANIFEST
 dist/
 docs/_build/
 docs/locale/
-model/model.npy
+ml_model/ml_model.npy
 node_modules/
 tests/coverage_html/
 tests/.coverage
