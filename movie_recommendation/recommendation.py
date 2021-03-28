@@ -1,12 +1,12 @@
 import pandas as pd
-from model import model
+from ml_model import ml_model
 from itertools import islice
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 df = pd.read_csv('training_dataset/IMDb movies.csv')
 
-cosine_sim = model.get_model()
+cosine_sim = ml_model.get_model()
 
 def get_movie_from_index(index):
     return df[df.index == index].to_dict('records')[0]
