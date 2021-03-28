@@ -5,8 +5,10 @@ from os import path
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 def train_model():
-    dataset = pd.read_csv('training_dataset/IMDb movies.csv')
+    dataset = pd.read_csv(os.path.join(BASE_DIR, 'training_dataset/IMDb movies.csv'))
     features = ['keywords', 'cast', 'genres', 'director']
 
     def combine_features(row):
@@ -27,7 +29,7 @@ def train_model():
     return ml_model
 
 def get_model():
-    if path.exists('ml_model/ml_model.npy'):
-        return np.load('ml_model/ml_model.npy')
+    if path.exists(os.path.join(BASE_DIR, 'ml_model/ml_model.npy')):
+        return np.load(os.path.join(BASE_DIR, 'ml_model/ml_model.npy'))
     else:
         return train_model()

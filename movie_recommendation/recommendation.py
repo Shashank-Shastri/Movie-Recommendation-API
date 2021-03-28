@@ -1,10 +1,12 @@
+import os
 import pandas as pd
 from ml_model import ml_model
 from itertools import islice
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-df = pd.read_csv('training_dataset/IMDb movies.csv')
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+df = pd.read_csv(os.path.join(BASE_DIR, 'training_dataset/IMDb movies.csv'))
 
 cosine_sim = ml_model.get_model()
 
