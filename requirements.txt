@@ -1,8 +1,9 @@
 django
-gunicorn
 django-heroku
+gunicorn
 joblib
 numpy
 pandas
+python-dotenv
 scikit-learn
 scipy
