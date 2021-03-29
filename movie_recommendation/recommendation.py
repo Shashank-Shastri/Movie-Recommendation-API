@@ -6,23 +6,23 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-df = pd.read_csv(os.path.join(BASE_DIR, 'training_dataset/IMDb movies.csv'))
+dataset = pd.read_csv(os.environ.get('DATASET_PATH', os.path.join(BASE_DIR, 'training_dataset/IMDb movies.csv')))
 
 cosine_sim = ml_model.get_model()
 
 def get_movie_from_index(index):
-    return df[df.index == index].to_dict('records')[0]
+    return dataset[dataset.index == index].to_dict('records')[0]
 
 def get_index_from_title(title):
-    return df[df.title.str.lower() == title.lower()]['index'].values[0]
+    return dataset[dataset.title.str.lower() == title.lower()]['index'].values[0]
 
 def get_index_from_imdb_id(imdb_id):
-    return df[df.imdb_title_id == imdb_id]['index'].values[0]
+    return dataset[dataset.imdb_title_id == imdb_id]['index'].values[0]
 
 def recommend_movies(movie_user_likes, imdb_id, number_of_recommendations):
-    if imdb_id and imdb_id in df.imdb_title_id.str:
+    if imdb_id and imdb_id in dataset.imdb_title_id.str:
         movie_index = get_index_from_imdb_id(imdb_id)
-    elif movie_user_likes and movie_user_likes.lower() in df.title.str.lower().unique():
+    elif movie_user_likes and movie_user_likes.lower() in dataset.title.str.lower().unique():
         movie_index = get_index_from_title(str(movie_user_likes))
     else:
         return 'Movie not in Database'

@@ -8,7 +8,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def train_model():
-    dataset = pd.read_csv(os.path.join(BASE_DIR, 'training_dataset/IMDb movies.csv'))
+    dataset = pd.read_csv(os.environ.get('DATASET_PATH', os.path.join(BASE_DIR, 'training_dataset/IMDb movies.csv')))
     features = ['keywords', 'cast', 'genres', 'director']
 
     def combine_features(row):
@@ -31,5 +31,7 @@ def train_model():
 def get_model():
     if path.exists(os.path.join(BASE_DIR, 'ml_model/ml_model.npy')):
         return np.load(os.path.join(BASE_DIR, 'ml_model/ml_model.npy'))
+    elif os.environ.get('ML_MODEL_PATH', False):
+        return np.load(os.environ.get('ML_MODEL_PATH', False))
     else:
         return train_model()
