@@ -20,7 +20,7 @@ def get_index_from_imdb_id(imdb_id):
     return dataset[dataset.imdb_title_id == imdb_id]['index'].values[0]
 
 def recommend_movies(movie_user_likes, imdb_id, number_of_recommendations):
-    if imdb_id and imdb_id in dataset.imdb_title_id.str:
+    if imdb_id and imdb_id in dataset.imdb_title_id.str.lower().unique():
         movie_index = get_index_from_imdb_id(imdb_id)
     elif movie_user_likes and movie_user_likes.lower() in dataset.title.str.lower().unique():
         movie_index = get_index_from_title(str(movie_user_likes))
