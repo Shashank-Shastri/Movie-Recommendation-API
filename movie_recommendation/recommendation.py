@@ -8,7 +8,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 dataset = pd.read_csv(os.environ.get('DATASET_PATH', os.path.join(BASE_DIR, 'training_dataset/IMDb movies.csv')))
 
-cosine_sim = ml_model.get_model()
+trained_model = ml_model.get_model()
 
 def get_movie_from_index(index):
     return dataset[dataset.index == index].to_dict('records')[0]
@@ -19,19 +19,19 @@ def get_index_from_title(title):
 def get_index_from_imdb_id(imdb_id):
     return dataset[dataset.imdb_title_id == imdb_id]['index'].values[0]
 
-def recommend_movies(movie_user_likes, imdb_id, number_of_recommendations):
-    if imdb_id and imdb_id in dataset.imdb_title_id.str.lower().unique():
-        movie_index = get_index_from_imdb_id(imdb_id)
-    elif movie_user_likes and movie_user_likes.lower() in dataset.title.str.lower().unique():
-        movie_index = get_index_from_title(str(movie_user_likes))
+def recommend_movies(query):
+    if query['q'] in dataset.imdb_title_id.str.lower().unique():
+        movie_index = get_index_from_imdb_id(query['q'])
+    elif query['q'].lower() in dataset.title.str.lower().unique():
+        movie_index = get_index_from_title(query['q'])
     else:
-        return 'Movie not in Database'
+        return query, [], 404, 'Movie not in Database.'
     
-    similar_movies =  list(enumerate(cosine_sim[movie_index]))
+    similar_movies =  list(enumerate(trained_model[movie_index]))
 
-    sorted_similar_movies = sorted(similar_movies,key=lambda x:x[1],reverse=True)[1:]
+    sorted_similar_movies = sorted(similar_movies, key = lambda x:x[1], reverse = True)[1:]
 
     movies = (get_movie_from_index(element[0]) for element in sorted_similar_movies)
-    recommended_movies = list(islice(movies, int(number_of_recommendations)))
+    recommended_movies = list(islice(movies, query['limit']))
 
-    return recommended_movies
+    return query, recommended_movies, 200, ''

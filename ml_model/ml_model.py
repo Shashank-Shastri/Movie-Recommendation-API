@@ -18,16 +18,17 @@ def train_model():
         dataset[feature] = dataset[feature].fillna('')
 
     dataset['combined_features'] = dataset.apply(combine_features, axis=1)
-    dataset = dataset.filter(['combined_features'])
+    dataset = dataset.filter(['combined_features'])  #Remove unused features
 
     cv = CountVectorizer()
     count_matrix = cv.fit_transform(dataset['combined_features'])
     ml_model = cosine_similarity(count_matrix)
 
-    np.save('ml_model/ml_model.npy', ml_model)
+    np.save('ml_model/ml_model.npy', ml_model) #Save the trained model to file
 
     return ml_model
 
+#Return the pre-trained model from file if present, else train and return it
 def get_model():
     if path.exists(os.path.join(BASE_DIR, 'ml_model/ml_model.npy')):
         return np.load(os.path.join(BASE_DIR, 'ml_model/ml_model.npy'))
