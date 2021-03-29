@@ -5,12 +5,13 @@
 .tox/
 __pycache__
 MANIFEST
+build/
 dist/
 docs/_build/
 docs/locale/
 ml_model/ml_model.npy
 node_modules/
+staticfiles
 tests/coverage_html/
 tests/.coverage
-build/
 tests/report/
