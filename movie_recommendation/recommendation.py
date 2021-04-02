@@ -11,7 +11,7 @@ dataset = pd.read_csv(os.environ.get('DATASET_PATH', os.path.join(BASE_DIR, 'tra
 trained_model = ml_model.get_model()
 
 def get_movie_from_index(index):
-    return dataset[dataset.index == index].to_dict('records')[0]
+    return dataset[dataset.index == index].fillna('').to_dict('records')[0]
 
 def get_index_from_title(title):
     return dataset[dataset.title.str.lower() == title.lower()]['index'].values[0]
