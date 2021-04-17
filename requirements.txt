@@ -1,4 +1,5 @@
 django
+django-cors-headers
 django-dotenv
 django-heroku
 gunicorn
