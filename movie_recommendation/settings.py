@@ -55,8 +55,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
-    r'^https://\w+\.web\.app$',
-    r'^https://\w+\.shashanks\.ga$',
+    r'^https://.+\.web\.app.*',
+    r'^https://.+\.shashanks\.ga.*',
 ]
 
 ROOT_URLCONF = 'movie_recommendation.urls'
