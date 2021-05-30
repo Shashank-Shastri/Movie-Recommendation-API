@@ -2,6 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from . import recommendation
 from ml_model import ml_model
 
+
 def recommend_movies(request):
     movie_name = request.GET.get('title', '')
     imdb_id = request.GET.get('imdb_id', '')
@@ -28,7 +29,8 @@ def recommend_movies(request):
     if error:
         response['error'] = error
 
-    return JsonResponse(status = status, data = response)
+    return JsonResponse(status=status, data=response)
+
 
 def retrain_model(request):
     ml_model.train_model()
