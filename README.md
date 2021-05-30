@@ -1,7 +1,28 @@
 # Movie-Recommendation-API
 An API which recommends movie based on title provided or IMDb ID provided.
 
-**Recommend Movie**
+## Project setup
+
+This project requires Python 3.
+Rename .env-sample to .env and update values as required.
+
+### Installing requirements
+```
+pip3 install -r requirements.txt
+pip3 install -r dev-requirements.txt (Installing development packages)
+```
+
+### Compiles and hot-reloads for development
+```
+python3 manage.py runserver
+```
+
+### Lints and fixes files
+```
+autopep8 --in-place --recursive .
+```
+
+**API Details**
 ----
   Returns json data with movie recommendations.
 

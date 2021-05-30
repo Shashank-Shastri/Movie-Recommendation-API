@@ -1,11 +1,6 @@
-django
-django-cors-headers
-django-dotenv
-django-heroku
-gunicorn
-joblib
-numpy
-pandas
-scikit-learn
-scipy
-whitenoise
+Django==3.2.3
+numpy==1.20.3
+pandas==1.2.4
+django_heroku==0.3.1
+python-dotenv==0.17.1
+scikit_learn==0.24.2

@@ -57,6 +57,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r'^https://.+\.web\.app.*',
     r'^https://.+\.shashanks\.ga.*',
+    #r'^http://localhost:*', #Uncomment this in development mode for the front-end
 ]
 
 ROOT_URLCONF = 'movie_recommendation.urls'
