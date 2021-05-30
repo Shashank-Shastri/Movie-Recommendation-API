@@ -30,9 +30,12 @@ def train_model():
 
 #Return the pre-trained model from file if present, else train and return it
 def get_model():
-    if path.exists(os.path.join(BASE_DIR, 'ml_model/ml_model.npy')):
-        return np.load(os.path.join(BASE_DIR, 'ml_model/ml_model.npy'))
-    elif os.environ.get('ML_MODEL_PATH', False):
-        return np.load(os.environ.get('ML_MODEL_PATH', False))
+    saved_model_path = os.path.join(BASE_DIR, 'ml_model/ml_model.npy')
+    remote_model_path = os.environ.get('ML_MODEL_PATH', False)
+
+    if path.exists(saved_model_path):
+        return np.load(saved_model_path)
+    elif remote_model_path:
+        return np.load(remote_model_path)
     else:
         return train_model()
