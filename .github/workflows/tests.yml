@@ -1,0 +1,63 @@
+name: Run tests
+
+# triggers for our workflow
+on:
+  # opening a pull request to master and develop branch will be a trigger
+  pull_request:
+    branches:
+      - master
+      - release
+  # any code pushed to master and develop branch will also be a trigger
+  push:
+    branches:
+      - master
+      - release
+
+
+jobs:
+  health-check-job: # health check job for testing and code formatting check
+    runs-on: ubuntu-latest # os for running the job
+    steps:
+      - name: Checkout code # checking our the code at current commit that triggers the workflow
+        uses: actions/checkout@v2
+
+      - name: Cache dependency # caching dependency will make our build faster.
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Set Python version
+        id: set-version
+        run: |
+          runtime=`cat runtime.txt`
+          echo "::set-output name=version::${runtime#*-}"
+
+      - name: Setup python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ steps.set-version.outputs.version }}
+
+      - name: Create .env file
+        run: |
+          ENV_FILE=$(cat << EOF
+          DATASET_PATH=${{ secrets.DATASET_PATH }}
+          DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}
+          EOF
+          )
+
+          echo "$ENV_FILE" >> .env
+
+      - name: Check Python version
+        run: python --version
+
+      - name: Install requirements # install application requirements
+        run: pip install -r requirements.txt pycodestyle
+
+      - name: Check Syntax # check code formatting
+        run: pycodestyle --statistics .
+
+      - name: Run Test # running tests
+        run: python manage.py test

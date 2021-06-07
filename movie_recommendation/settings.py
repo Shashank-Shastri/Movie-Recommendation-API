@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-import django_heroku
 import os
+if 'HEROKU' in os.environ:
+    import django_heroku
+    django_heroku.settings(locals())
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -57,7 +59,8 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r'^https://.+\.web\.app.*',
     r'^https://.+\.shashanks\.ga.*',
-    #r'^http://localhost:*', #Uncomment this in development mode for the front-end
+    # r'^http://localhost:*',
+    # Uncomment above line in development mode for the front-end
 ]
 
 ROOT_URLCONF = 'movie_recommendation.urls'
@@ -97,16 +100,18 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.\
+            UserAttributeSimilarityValidator',
+    }, {
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
+    }, {
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
+    }, {
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -131,5 +136,3 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-django_heroku.settings(locals())

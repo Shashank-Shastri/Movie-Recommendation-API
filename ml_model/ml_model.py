@@ -14,7 +14,14 @@ def train_model():
     features = ['keywords', 'cast', 'genres', 'director']
 
     def combine_features(row):
-        return row['keywords'] + ' ' + row['cast'] + ' ' + row['genres'] + ' ' + row['director']
+        return ' '.join(
+            [
+                row['keywords'],
+                row['cast'],
+                row['genres'],
+                row['director']
+            ]
+        )
 
     for feature in features:
         dataset[feature] = dataset[feature].fillna('')
