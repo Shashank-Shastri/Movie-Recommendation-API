@@ -15,7 +15,7 @@ def recommend_movies(request):
     }
 
     if query['q']:
-        query, result, status, error = recommendation.recommend_movies(query)
+        result, status, error = recommendation.recommend_movies(query)
     else:
         error = 'Empty query.'
         result = []

@@ -9,6 +9,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 dataset = pd.read_csv(os.environ.get('DATASET_PATH', os.path.join(
     BASE_DIR, 'training_dataset/IMDb movies.csv')))
 
+lowercase_title = dataset.title.str.lower()
+
 trained_model = ml_model.get_model()
 
 
@@ -17,7 +19,7 @@ def get_movie_from_index(index):
 
 
 def get_index_from_title(title):
-    return dataset[dataset.title.str.lower() == title.lower()]['index'].values[0]
+    return dataset[lowercase_title == title.lower()]['index'].values[0]
 
 
 def get_index_from_imdb_id(imdb_id):
@@ -27,10 +29,10 @@ def get_index_from_imdb_id(imdb_id):
 def recommend_movies(query):
     if query['q'] in dataset.imdb_title_id.str.lower().unique():
         movie_index = get_index_from_imdb_id(query['q'])
-    elif query['q'].lower() in dataset.title.str.lower().unique():
+    elif query['q'].lower() in lowercase_title.unique():
         movie_index = get_index_from_title(query['q'])
     else:
-        return query, [], 404, 'Movie not in Database.'
+        return [], 404, 'Movie not in Database.'
 
     similar_movies = list(enumerate(trained_model[movie_index]))
 
@@ -41,4 +43,4 @@ def recommend_movies(query):
               for element in sorted_similar_movies)
     recommended_movies = list(islice(movies, query['limit']))
 
-    return query, recommended_movies, 200, ''
+    return recommended_movies, 200, ''
