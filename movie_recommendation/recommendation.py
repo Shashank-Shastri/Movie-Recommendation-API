@@ -5,7 +5,7 @@ from itertools import islice
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 dataset = pd.read_csv(os.environ.get('DATASET_PATH', os.path.join(
-    BASE_DIR, 'training_dataset/IMDb movies.csv')))
+    BASE_DIR, 'training_dataset/IMDb movies.csv')), on_bad_lines='skip')
 
 lowercase_title = dataset.title.str.lower()
 
