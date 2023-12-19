@@ -28,7 +28,11 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.environ.get('ENVIRONMENT', '') == 'Development' else False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # Application definition
@@ -58,7 +62,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r'^https://.+\.web\.app.*',
-    r'^https://.+\.shashanks\.ga.*',
+    r'^https://.+\.techieshank\.com.*',
     # r'^http://localhost:*',
     # Uncomment above line in development mode for the front-end
 ]
