@@ -2,8 +2,6 @@ import os
 import pandas as pd
 from ml_model import ml_model
 from itertools import islice
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 dataset = pd.read_csv(os.environ.get('DATASET_PATH', os.path.join(
