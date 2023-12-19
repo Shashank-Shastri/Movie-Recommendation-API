@@ -3,6 +3,7 @@
 *.pot
 *.py[co]
 .tox/
+.DS_Store
 __pycache__
 MANIFEST
 build/
